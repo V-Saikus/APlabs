@@ -320,7 +320,7 @@ components:
           type: string
         name:
           type: string
-        creator_id:
+        user_id:
           type: string
         price_for_hour:
           type: number
@@ -337,7 +337,7 @@ components:
         end_time:
           type: string
           format: date-time
-        tenant_id:
+        user_id:
           type: string
         audience_id:
           type: string
@@ -381,7 +381,7 @@ components:
           type: string
         name:
           type: string
-        creator_id:
+        user_id:
           type: string
         price_for_hour:
           type: number
@@ -409,7 +409,7 @@ components:
         end_time:
           type: string
           format: date-time
-        tenant_id:
+        user_id:
           type: string
         audience_id:
           type: string
