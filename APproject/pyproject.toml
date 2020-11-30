@@ -7,6 +7,10 @@ authors = ["V-Saikus <wowanos88@gmail.com>"]
 [tool.poetry.dependencies]
 python = "3.6.4"
 Flask = "^1.1.2"
+psycopg2 = "^2.8.6"
+Flask-Script = "^2.0.6"
+Flask-SQLAlchemy = "^2.4.4"
+Flask-Migrate = "^2.5.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
