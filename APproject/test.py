@@ -5,7 +5,7 @@ user = User(first_name='user', second_name='user', birthday='14.08.2002', email=
 audience = Audience(name='audience', price_for_hour='100', user=user)
 reservation = Reservation(start_time=datetime.datetime(2020, 11, 29, 12, 30), end_time=datetime.datetime(2020, 11, 29, 14, 30), user=user, audience=audience)
 
-# db.create_all()
+#db.create_all()
 
 db.session.add(user)
 db.session.add(audience)

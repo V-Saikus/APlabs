@@ -21,7 +21,7 @@ ROOT_PATH = os.path.join(current_path, '..')
 sys.path.append(ROOT_PATH)
 
 from models import Base
-from migrate import engine
+from launch import engine
 
 target_metadata = Base.metadata
 
