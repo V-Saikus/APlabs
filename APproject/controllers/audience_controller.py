@@ -14,7 +14,6 @@ def get_serializable_audience(audience):
 
 
 @app.route('/audience', methods=['POST'])
-@jwt_required
 def create_audience():
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 400
@@ -46,7 +45,6 @@ def get_audience(audienceId):
 
 
 @app.route('/audience/<audienceId>', methods=['PUT'])
-@jwt_required
 def put_audience(audienceId):
     audience = Audience.query.filter_by(id=audienceId).first()
     if audience is None:

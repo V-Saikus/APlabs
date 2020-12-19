@@ -15,7 +15,6 @@ def get_serializable_reservation(reservation):
 
 
 @app.route('/audience/reserve', methods=['POST'])
-@jwt_required
 def create_reservation():
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 400
@@ -45,7 +44,6 @@ def get_reserve(reservationId):
 
 
 @app.route('/reserve/<reservationId>', methods=['PUT'])
-@jwt_required
 def put_reserve(reservationId):
     reserve = Reservation.query.filter_by(id=reservationId).first()
     if reserve is None:
@@ -60,7 +58,6 @@ def put_reserve(reservationId):
     return jsonify(status='updated reservation'), 202
 
 @app.route('/reserve/<reservationId>', methods=['DELETE'])
-@jwt_required
 def delete_reserve(reservationId):
     reserve = Reservation.query.filter_by(id=reservationId).first()
     if reserve is None:

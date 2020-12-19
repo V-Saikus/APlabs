@@ -49,7 +49,6 @@ def login_user():
 
 
 @app.route('/user/<userId>', methods=['GET'])
-@jwt_required
 def get_user(userId):
     try:
         int(userId)
@@ -62,7 +61,6 @@ def get_user(userId):
 
 
 @app.route('/user/<userId>', methods=['PUT'])
-@jwt_required
 def put_user(userId):
     user = User.query.filter_by(id=userId)
     if user is None:
