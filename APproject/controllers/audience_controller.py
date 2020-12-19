@@ -14,12 +14,13 @@ def get_serializable_audience(audience):
 
 
 @app.route('/audience', methods=['POST'])
+@auth.login_required
 def create_audience():
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 400
     name=request.json.get('name', None)
     price_for_hour=request.json.get('price_for_hour', None)
-    creator_id = User.query.filter_by(phone_number=get_jwt_identity()).first().id
+    creator_id = auth.current_user().id
     db.session.add(Audience(name=name, price_for_hour=price_for_hour, user_id=creator_id))
     db.session.commit()
     return jsonify({"Success": "audience has been created"}), 201
@@ -45,6 +46,7 @@ def get_audience(audienceId):
 
 
 @app.route('/audience/<audienceId>', methods=['PUT'])
+@auth.login_required
 def put_audience(audienceId):
     audience = Audience.query.filter_by(id=audienceId).first()
     if audience is None:
