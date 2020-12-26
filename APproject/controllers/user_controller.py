@@ -1,5 +1,4 @@
 from models import *
-from flask_jwt_extended import create_access_token
 from werkzeug.security import check_password_hash, generate_password_hash
 from config import *
 
@@ -35,21 +34,7 @@ def create_user():
     return jsonify({"Success": "User has been created"}), 201
 
 
-@app.route('/user/login', methods=['GET'])
-def login_user():
-    if not request.is_json:
-        return jsonify({"msg": "Missing JSON in request"}), 400
-    phone_number = request.json.get('phone_number', None)
-    password = request.json.get('password', None)
-    current_user = User.query.filter_by(phone_number=phone_number).first()
-    if check_password_hash(current_user.password, password):
-        return jsonify(access_token=create_access_token(identity=phone_number)), 200
-    else:
-        return jsonify({"Error": "Wrong password"}), 401
-
-
 @app.route('/user/<userId>', methods=['GET'])
-@jwt_required
 def get_user(userId):
     try:
         int(userId)
@@ -62,7 +47,7 @@ def get_user(userId):
 
 
 @app.route('/user/<userId>', methods=['PUT'])
-@jwt_required
+@auth.login_required
 def put_user(userId):
     user = User.query.filter_by(id=userId)
     if user is None:

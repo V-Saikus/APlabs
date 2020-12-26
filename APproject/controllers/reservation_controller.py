@@ -15,18 +15,15 @@ def get_serializable_reservation(reservation):
 
 
 @app.route('/audience/reserve', methods=['POST'])
-@jwt_required
+@auth.login_required
 def create_reservation():
     if not request.is_json:
         return jsonify({"msg": "Missing JSON in request"}), 400
     start_time=request.json.get('start_time', None)
     end_time=request.json.get('end_time', None)
-    creator_id = User.query.filter_by(phone_number=get_jwt_identity()).first().id
+    creator_id = auth.current_user().id
     audience_id=request.json.get('audience_id', None)
     reservation_list=Reservation.query.filter_by(audience_id=audience_id).all()
-    #for i in reservation_list:
-    #    if datetime.datetime(start_time)<i.end_time or i.start_time<datetime.datetime(end_time):
-    #        return jsonify({"msg": "Audience is already reserved for this time"}), 409
     db.session.add(Reservation(start_time=start_time, end_time=end_time, user_id=creator_id, audience_id=audience_id))
     db.session.commit()
     return jsonify({"Success": "reserve has been created"}), 201
@@ -45,7 +42,7 @@ def get_reserve(reservationId):
 
 
 @app.route('/reserve/<reservationId>', methods=['PUT'])
-@jwt_required
+@auth.login_required
 def put_reserve(reservationId):
     reserve = Reservation.query.filter_by(id=reservationId).first()
     if reserve is None:
@@ -60,7 +57,7 @@ def put_reserve(reservationId):
     return jsonify(status='updated reservation'), 202
 
 @app.route('/reserve/<reservationId>', methods=['DELETE'])
-@jwt_required
+@auth.login_required
 def delete_reserve(reservationId):
     reserve = Reservation.query.filter_by(id=reservationId).first()
     if reserve is None:

@@ -15,6 +15,12 @@ fileConfig(config.config_file_name)
 
 import os
 import sys
+from sqlalchemy_utils import database_exists, create_database
+
+URL = os.getenv("URL")
+
+if not database_exists(URL):
+    create_database(URL)
 
 current_path = os.path.dirname(os.path.abspath(__file__))
 ROOT_PATH = os.path.join(current_path, '..')
@@ -44,9 +50,8 @@ def run_migrations_offline():
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
     context.configure(
-        url=url,
+        url=URL,
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
