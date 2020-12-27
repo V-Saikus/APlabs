@@ -14,5 +14,9 @@ def verify_password(username, password):
     if user and check_password_hash(user.password, password):
         return user
 
+@app.route('/')
+def hello_world():
+    return 'Hello World'
+
 if __name__ == '__main__':
     app.run()
