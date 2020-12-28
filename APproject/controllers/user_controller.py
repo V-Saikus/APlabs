@@ -49,7 +49,7 @@ def get_user(userId):
 @app.route('/user/<userId>', methods=['PUT'])
 @auth.login_required
 def put_user(userId):
-    user = User.query.filter_by(id=userId)
+    user = User.query.filter_by(id=userId).first()
     if user is None:
         return jsonify({"Error": "User not found"}), 404
     first_name = request.json.get('first_name', None)
